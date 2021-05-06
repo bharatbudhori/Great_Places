@@ -38,36 +38,33 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+        children: <Widget>[
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     TextField(
-                      decoration: InputDecoration(
-                        labelText: 'Title',
-                      ),
+                      decoration: InputDecoration(labelText: 'Title'),
                       controller: _titleController,
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(
+                      height: 10,
+                    ),
                     ImageInput(_selectImage),
                   ],
                 ),
               ),
             ),
           ),
-          ElevatedButton.icon(
-            onPressed: _savePlace,
+          RaisedButton.icon(
             icon: Icon(Icons.add),
             label: Text('Add Place'),
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              primary: Theme.of(context).accentColor,
-              onPrimary: Colors.black,
-            ),
+            onPressed: _savePlace,
+            elevation: 0,
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            color: Theme.of(context).accentColor,
           ),
         ],
       ),
