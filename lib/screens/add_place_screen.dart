@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../widgets/image_input.dart';
 import '../providers/great_place.dart';
+import '../widgets/location_input.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   static const routeName = '/add-place';
@@ -38,33 +39,38 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
+        children: [
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Column(
-                  children: <Widget>[
+                  children: [
                     TextField(
-                      decoration: InputDecoration(labelText: 'Title'),
+                      decoration: InputDecoration(
+                        labelText: 'Title',
+                      ),
                       controller: _titleController,
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    SizedBox(height: 10),
                     ImageInput(_selectImage),
+                    SizedBox(height: 10),
+                    LocationInput(),
                   ],
                 ),
               ),
             ),
           ),
-          RaisedButton.icon(
+          ElevatedButton.icon(
+            onPressed: _savePlace,
             icon: Icon(Icons.add),
             label: Text('Add Place'),
-            onPressed: _savePlace,
-            elevation: 0,
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            color: Theme.of(context).accentColor,
+            style: ElevatedButton.styleFrom(
+              elevation: 0,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              primary: Theme.of(context).accentColor,
+              onPrimary: Colors.black,
+            ),
           ),
         ],
       ),
