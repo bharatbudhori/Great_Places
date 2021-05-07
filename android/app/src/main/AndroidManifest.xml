@@ -3,6 +3,8 @@
    <application
         android:label="great_places"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyAmAlETPn6Y0bvTz5Fi3Bho0UGKVpxzyHg"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
