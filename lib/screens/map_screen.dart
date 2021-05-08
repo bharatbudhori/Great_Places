@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../widgets/marker_address.dart';
 import '../models/place.dart';
 
 class MapScreen extends StatefulWidget {
@@ -20,18 +21,25 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   Set<Marker> _marker = {};
   LatLng _pickedLocation;
+  String address;
 
   void _selectLocation(LatLng position) {
     setState(() {
       _pickedLocation = position;
       _marker.add(Marker(
-          markerId: MarkerId('m1'),
-          position: _pickedLocation ??
-              LatLng(
-                widget.initialLocation.latitude,
-                widget.initialLocation.longitude,
-              ),
-          ));
+        markerId: MarkerId('m1'),
+        position: LatLng(_pickedLocation.latitude, _pickedLocation.longitude) ??
+            LatLng(
+              widget.initialLocation.latitude,
+              widget.initialLocation.longitude,
+            ),
+      
+      ));
+      Future<String> foo()async{
+      return markerAdress(position.latitude, position.longitude);}
+
+      foo().then((value)=>address=value);
+      
     });
   }
 
@@ -44,7 +52,7 @@ class _MapScreenState extends State<MapScreen> {
           if (widget.isSelecting)
             IconButton(
               icon: Icon(Icons.check),
-              onPressed: (_pickedLocation == null )
+              onPressed: (_pickedLocation == null)
                   ? null
                   : () {
                       Navigator.of(context).pop(_pickedLocation);
@@ -52,17 +60,30 @@ class _MapScreenState extends State<MapScreen> {
             ),
         ],
       ),
-      body: GoogleMap(
-        scrollGesturesEnabled: true,
-        initialCameraPosition: CameraPosition(
-          target: LatLng(
-            widget.initialLocation.latitude,
-            widget.initialLocation.longitude,
+      body: Column(
+        children: [
+          Card(
+            elevation: 5,
+            child: Container(
+              width: double.infinity,
+              child: Text(address ?? 'address'),
+            ),
           ),
-          zoom: 20,
-        ),
-        onTap: widget.isSelecting ? _selectLocation : null,
-        markers: _marker,
+          Expanded(
+            child: GoogleMap(
+              scrollGesturesEnabled: true,
+              initialCameraPosition: CameraPosition(
+                target: LatLng(
+                  widget.initialLocation.latitude,
+                  widget.initialLocation.longitude,
+                ),
+                zoom: 20,
+              ),
+              onTap: widget.isSelecting ? _selectLocation : null,
+              markers: _marker,
+            ),
+          ),
+        ],
       ),
     );
   }
