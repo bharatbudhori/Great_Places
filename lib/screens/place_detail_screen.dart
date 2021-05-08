@@ -41,6 +41,7 @@ class PlaceDetailScreen extends StatelessWidget {
           SizedBox(
             height: 14,
           ),
+          Text(selectedPlace.description),
           TextButton.icon(
             onPressed: () {
               Navigator.of(context).push(

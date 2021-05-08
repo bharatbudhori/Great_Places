@@ -17,6 +17,7 @@ class AddPlaceScreen extends StatefulWidget {
 
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
   final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
   File _pickedImage;
   PlaceLocation _pickedLocation;
 
@@ -34,8 +35,11 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
         _pickedLocation == null) {
       return;
     }
-    Provider.of<GreatPlaces>(context, listen: false)
-        .addPlace(_titleController.text, _pickedImage, _pickedLocation);
+    Provider.of<GreatPlaces>(context, listen: false).addPlace(
+        _titleController.text,
+        _descriptionController.text,
+        _pickedImage,
+        _pickedLocation);
     Navigator.of(context).pop();
   }
 
@@ -55,13 +59,35 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                 child: Column(
                   children: [
                     TextField(
+                      
                       decoration: InputDecoration(
                         labelText: 'Title',
                       ),
                       controller: _titleController,
                     ),
                     SizedBox(height: 10),
+                    TextField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 4,
+                      decoration: InputDecoration(
+                        labelText: 'Description',
+                      ),
+                      controller: _descriptionController,
+                    ),
+                    SizedBox(height: 10),
                     ImageInput(_selectImage),
+                    SizedBox(height: 10),
+                    Card(
+                      elevation: 5,
+                      child: Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          'No place chosen yet',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ),
+                    ),
                     SizedBox(height: 10),
                     LocationInput(_selectPlace),
                   ],

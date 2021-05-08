@@ -53,6 +53,7 @@ class _MapScreenState extends State<MapScreen> {
         ],
       ),
       body: GoogleMap(
+        scrollGesturesEnabled: true,
         initialCameraPosition: CameraPosition(
           target: LatLng(
             widget.initialLocation.latitude,

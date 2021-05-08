@@ -20,6 +20,13 @@ class PlacesListScreen extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.of(context).pushNamed(AddPlaceScreen.routeName);
+        },
+        label: Text('Add Location'),
+        icon: Icon(Icons.add),
+      ),
       body: FutureBuilder(
         future: Provider.of<GreatPlaces>(context, listen: false)
             .fetchAndSetPlaces(),
@@ -36,20 +43,40 @@ class PlacesListScreen extends StatelessWidget {
                     ? ch
                     : ListView.builder(
                         itemCount: greatPlaces.items.length,
-                        itemBuilder: (ctx, i) => ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: FileImage(
-                              greatPlaces.items[i].image,
+                        itemBuilder: (ctx, i) => Card(
+                          color: Colors.indigo[50],
+                          elevation: 9,
+                          shadowColor: Theme.of(context).primaryColor,
+                          margin: EdgeInsets.all(10),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: FileImage(
+                                  greatPlaces.items[i].image,
+                                ),
+                              ),
+                              title: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Text(
+                                  greatPlaces.items[i].title,
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 8, left: 5, right: 5),
+                                child:
+                                    Text(greatPlaces.items[i].location.address),
+                              ),
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                  PlaceDetailScreen.routeName,
+                                  arguments: greatPlaces.items[i].id,
+                                );
+                              },
                             ),
                           ),
-                          title: Text(greatPlaces.items[i].title),
-                          subtitle: Text(greatPlaces.items[i].location.address),
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                              PlaceDetailScreen.routeName,
-                              arguments: greatPlaces.items[i].id,
-                            );
-                          },
                         ),
                       ),
               ),

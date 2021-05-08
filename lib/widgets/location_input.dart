@@ -7,6 +7,7 @@ import '../screens/map_screen.dart';
 
 class LocationInput extends StatefulWidget {
   final Function onSelectPlace;
+  
 
   LocationInput(this.onSelectPlace);
 
@@ -32,12 +33,14 @@ class _LocationInputState extends State<LocationInput> {
     _showPreview(locData.latitude, locData.longitude);
     
     widget.onSelectPlace(locData.latitude, locData.longitude);
+    
   }
 
   Future<void> _selectOnMap() async {
     final LatLng selectedLocation = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MapScreen(
+          
           isSelecting: true,
         ),
       ),
